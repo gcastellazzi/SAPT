@@ -623,33 +623,57 @@ def get_step_names(odb):
 
 #####################################################
 
-# Usage
-odb_name = 'example.odb'
-odb_folder_path = 'C:/temp\Extract_info_from_ODB/'
-odb_path = odb_folder_path + odb_name
-results_folder = odb_folder_path + 'results/'
-# Check if the folder exists
-if not os.path.exists(results_folder):
-    # Create the folder if it does not exist
-    os.makedirs(results_folder)
-    print("Directory created:", results_folder)
-else:
-    print("Directory already exists:", results_folder)
+#### INITIAL SETUP ####
+# Define the ODB file name and paths
+odb_name = 'example.odb'  # Name of the .odb file
+odb_folder_path = 'X:/GitHub/SAPT/'  # Folder containing the .odb file
+results_folder = os.path.join(odb_folder_path, 'results/')  # Folder for saving output files
 
-# Open the output database
-odb = openOdb(path=odb_path)
+# Construct the full path to the ODB file
+odb_path = os.path.join(odb_folder_path, odb_name)
+
+# Ensure the results folder exists
+if not os.path.exists(results_folder):
+    os.makedirs(results_folder)  # Create the folder if it does not exist
+    print("Directory created: %s" % results_folder)
+else:
+    print("Directory already exists: %s" % results_folder)
+
+#### START THE ANALYSIS OF THE ODB ####
+try:
+    # Open the output database
+    odb = openOdb(path=odb_path)
+    print("Successfully opened ODB file: %s" % odb_path)
+except Exception as e:
+    sys.exit("Failed to open ODB file %s. Error: %s" % (odb_path, str(e)))
+
 # Scan ODB by instance to get element types
-instance_element_types = scan_odb_by_instance(odb)
-# Get list of steps
-list_of_steps = get_step_names(odb)
-#set the Results view
-# Conditional check to ensure the script only tries to access `session` in CAE mode
-if hasattr(session, 'getInputs'):  # True only in GUI mode
-    # This will only run in CAE mode with GUI
-    print("Viewport set in CAE mode.")
-    session.viewports['Viewport: 1'].setValues(displayedObject=odb)
+try:
+    instance_element_types = scan_odb_by_instance(odb)
+    print("Scanned ODB by instance to identify element types.")
+except Exception as e:
+    sys.exit("Error scanning ODB by instance. Error: %s" % str(e))
+
+# Get the list of steps
+try:
+    list_of_steps = get_step_names(odb)
+    print("Steps in ODB: %s" % str(list_of_steps))
+except Exception as e:
+    sys.exit("Error retrieving steps from ODB. Error: %s" % str(e))
+
+#### SETUP RESULTS VIEW ####
+# Optional: Setup for results visualization if in GUI mode
+if hasattr(session, 'getInputs'):  # True only in Abaqus/CAE GUI mode
+    print("Configuring viewport for results in CAE mode.")
+    try:
+        session.viewports['Viewport: 1'].setValues(displayedObject=odb)
+    except KeyError:
+        print("Viewport: 1 not found. Ensure the CAE GUI is set up correctly.")
 else:
     print("Running in non-GUI mode, skipping viewport setup.")
+
+print("Setup complete. Ready to perform operations on the ODB.")
+
 
 for instance_name in instance_element_types:
     # Identify element types

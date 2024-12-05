@@ -1,0 +1,57 @@
+# -*- coding: mbcs -*-
+#
+# Abaqus/CAE Release 6.14-2 replay file
+# Internal Version: 2014_08_22-16.00.46 134497
+# Run by gcastellazzi on Thu Dec 05 09:57:35 2024
+#
+
+# from driverUtils import executeOnCaeGraphicsStartup
+# executeOnCaeGraphicsStartup()
+#: Executing "onCaeGraphicsStartup()" in the site directory ...
+from abaqus import *
+from abaqusConstants import *
+session.Viewport(name='Viewport: 1', origin=(1.17187, 1.14583), width=172.5, 
+    height=113.667)
+session.viewports['Viewport: 1'].makeCurrent()
+from driverUtils import executeOnCaeStartup
+executeOnCaeStartup()
+execfile('extract_example.py', __main__.__dict__)
+#: Directory already exists: X:/GitHub/SAPT/results/
+#: Warning: An output database lock file X:\GitHub\SAPT\example.lck has been detected. This may indicate that the output database is opened for writing by another application.
+#: X:/GitHub/SAPT/example.odb will be opened read-only. 
+#: Model: X:/GitHub/SAPT/example.odb
+#: Number of Assemblies:         1
+#: Number of Assembly instances: 0
+#: Number of Part instances:     1
+#: Number of Meshes:             1
+#: Number of Element Sets:       10
+#: Number of Node Sets:          10
+#: Number of Steps:              2
+#: Successfully opened ODB file: X:/GitHub/SAPT/example.odb
+#: Element types by instance in ODB:
+#: Instance 'PART-1-1':
+#:   C3D8: 1000
+#: Scanned ODB by instance to identify element types.
+#: Steps in ODB: ['Step-1', 'Step-2']
+#: Running in non-GUI mode, skipping viewport setup.
+#: Setup complete. Ready to perform operations on the ODB.
+#: Element types and counts for instance 'PART-1-1':
+#:   C3D8: 1000
+#: ('Instance: PART-1-1Count of Hex8 elements:', 1000)
+#: ('Instance: PART-1-1Count of Tet4 elements:', 0)
+#: Node IDs and coordinates have been written to : X:/GitHub/SAPT/results/PART-1-1_Step-1_node_coordinates.txt
+#: Boundary nodes and connectivity have been written to : X:/GitHub/SAPT/results/PART-1-1_Step-1_C3D8_boundary_nodes_connectivity.txt
+#: Extracted 1000 Hex8 elements from instance 'PART-1-1'.
+#: ('Triangular face connectivity has been written to', 'X:/GitHub/SAPT/results/PART-1-1_Step-1_C3D8_triangular_faces.txt')
+#: Boundary displacements (Ux, Uy, Uz) have been written to: X:/GitHub/SAPT/results/PART-1-1_Step-1_C3D8_boundary_displacements.txt
+#: ('VTK file for triangular mesh with vector displacements written to:', 'X:/GitHub/SAPT/results/PART-1-1_Step-1_C3D8_triangular_mesh_U.vtk')
+#: ('VTK file for Hex8 mesh with vector displacements written to:', 'X:/GitHub/SAPT/results/PART-1-1_Step-1_C3D8_Hexa_mesh_U.vtk')
+#: Node IDs and coordinates have been written to : X:/GitHub/SAPT/results/PART-1-1_Step-2_node_coordinates.txt
+#: Boundary nodes and connectivity have been written to : X:/GitHub/SAPT/results/PART-1-1_Step-2_C3D8_boundary_nodes_connectivity.txt
+#: Extracted 1000 Hex8 elements from instance 'PART-1-1'.
+#: ('Triangular face connectivity has been written to', 'X:/GitHub/SAPT/results/PART-1-1_Step-2_C3D8_triangular_faces.txt')
+#: Boundary displacements (Ux, Uy, Uz) have been written to: X:/GitHub/SAPT/results/PART-1-1_Step-2_C3D8_boundary_displacements.txt
+#: ('VTK file for triangular mesh with vector displacements written to:', 'X:/GitHub/SAPT/results/PART-1-1_Step-2_C3D8_triangular_mesh_U.vtk')
+#: ('VTK file for Hex8 mesh with vector displacements written to:', 'X:/GitHub/SAPT/results/PART-1-1_Step-2_C3D8_Hexa_mesh_U.vtk')
+print 'RT script done'
+#: RT script done

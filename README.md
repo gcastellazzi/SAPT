@@ -1,3 +1,4 @@
+
 # SAPT - Simulia Abaqus Python Tools
 
 **SAPT** is a simple set of Python tools designed to inspect Abaqus files (.cae and .odb). This initial version focuses on extracting data from the `.odb` file.
@@ -9,6 +10,7 @@ SAPT offers a range of functionalities to extract information from Abaqus ODB fi
 - **Displacement fields**: Extracts Ux, Uy, and Uz displacements at boundary nodes.
 - **Element type detection**: Identifies the type of elements in each instance (e.g., `C3D8`, `C3D4`).
 - **VTK file generation**: Produces VTK files with either scalar or vector fields for displacement visualization in compatible software.
+- **PLY file generation**: Translates outcomes into `.ply` files, supporting visualization of boundary nodes or deformed meshes.
 
 The code also supports `Hex8` and `Tet4` element types, handling boundary nodes, connectivity, and displacements for each element type.
 
@@ -40,6 +42,7 @@ For each instance and step in the ODB file, SAPT generates:
 3. **Element Connectivity**: Separate files for `Hex8` and `Tet4` elements, detailing connectivity.
 4. **Displacements**: Ux, Uy, and Uz displacements at boundary nodes.
 5. **VTK Files**: Triangular and Hexahedral VTK files for mesh and displacement visualization.
+6. **PLY Files**: Outputs `.ply` files for boundary nodes or deformed point clouds, enabling detailed visualization of simulation results.
 
 Files are saved in a `results` folder created in the output directory if it doesn’t already exist.
 
@@ -52,10 +55,11 @@ Here’s a breakdown of the main functions:
 - **`write_triangular_faces()`**: Converts quadrilateral boundary faces into triangles for VTK file generation.
 - **`extract_displacements()`**: Extracts Ux, Uy, and Uz displacement fields for nodes.
 - **`write_vtk_file()` / `write_vtk_hex8()`**: Generates VTK files for both `Hex8` and `Tet4` meshes, with scalar or vector displacement fields for post-processing.
+- **`write_ply_with_displacement_colors()`**: Generates `.ply` files, applying translations for deformed meshes or exporting boundary nodes.
 
 ## Example Output
 
-Each function writes the extracted data to a `.txt` file or a `.vtk` file in the `results` folder. Here is a sample VTK output for visualizing the displacement field:
+Each function writes the extracted data to a `.txt`, `.vtk`, or `.ply` file in the `results` folder. Here is a sample VTK output for visualizing the displacement field:
 
 ```plaintext
 # vtk DataFile Version 3.0
@@ -72,3 +76,9 @@ POINT_DATA 100
 VECTORS displacement float
 0.0 0.0 0.0
 ...
+```
+
+## New Features
+
+- **Functions Integration**: SAPT now modularizes its functionalities into reusable Python functions, making it easier to extend and maintain.
+- **PLY File Support**: Added support for `.ply` files to visualize boundary nodes or deformed meshes, improving post-processing capabilities.
